@@ -203,12 +203,12 @@ exports.index = function (req, res) {
     }
 
 
-    if (req.param('location')) {
-        criteria['$or'] = [ {'location':req.param('location')}, {'configLocation':req.param('location')} ];
+    if (req.query['location']) {
+        criteria['$or'] = [ {'location':req.query['location']}, {'configLocation':req.query['location']} ];
     }
 
-    if (req.param('label')) {
-        criteria['labels'] = req.param('label');
+    if (req.query['label']) {
+        criteria['labels'] = req.query['label'];
     }
 
     var page = req.query['page'] > 0 ? req.query['page'] : 0
