@@ -530,8 +530,9 @@ var snapShotTimer = {};
 var pendingSnapshots = {};
 
 exports.piScreenShot = function (sid,data) { // save screen shot in  _screenshots directory
-    var img = (new Buffer(data.data,"base64")).toString("binary"),
+    var img =  Buffer.from(data.data,"base64").toString("binary"),
         cpuId = data.playerInfo["cpuSerialNumber"];
+        console.log(img);
 
     clearTimeout(snapShotTimer[cpuId])
     delete snapShotTimer[cpuId];
