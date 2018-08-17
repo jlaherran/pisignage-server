@@ -1,8 +1,12 @@
 .panel.panel-info
     .panel-heading
         .row
-            .col-sm-3
-                h3.panel-title Reported Players
+            .col-sm-4
+            .row
+                h3.panel-title.col-sm-9 Reported Players
+                    .btn-group.btn-group-sm(ng-init="nam=false")
+                        button.fa.fa-clock-o.fa-lg.text-muted.btn.btn-info(ng-click="nam=false")
+                        button.fa.fa-sort-alpha-asc.fa-lg.text-muted.btn.btn-info(ng-click="nam=true")
             .col-sm-2
                 span.btn-group(ng-attr-title="Click this button to select, edit and add labels")
                     button.btn.btn-info.btn-sm(ng-click="loadCategory()")
@@ -13,7 +17,7 @@
 
     ul.list-group
 
-        li.list-group-item(ng-repeat='item in player.players | filter:labelFilter | filter:search | orderBy:"lastReported":true')
+        li.list-group-item(ng-repeat='item in player.players | filter:labelFilter | filter:search | orderBy:(nam? "name":"lastReported"):(nam?false:true)')
             .row
                 .col-sm-4
                     //h6.text-primary.truncate  {{item.localName || ("Player "+item.cpuSerialNumber.slice(12))}}

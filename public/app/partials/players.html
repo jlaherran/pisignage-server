@@ -2,16 +2,22 @@
 <div class="panel panel-info">
   <div class="panel-heading">
     <div class="row">
-      <div class="col-sm-3">
-        <h3 class="panel-title">Reported Players</h3>
+      <div class="col-sm-4">
+       <div class="row  "><h3 class="panel-title col-sm-9 ">Reported Players
+        <div class=" btn-group btn-group-sm" ng-init="nam=false">
+            <button class="fa fa-clock-o fa-lg text-muted btn btn-info " ng-click="nam=false" ></button>
+            <button class="fa fa-sort-alpha-asc fa-lg text-muted btn btn-info " ng-click="nam=true"></button></div>
+       </h3>
+      </div> 
       </div>
       <div class="col-sm-2"><span ng-attr-title="Click this button to select, edit and add labels" class="btn-group">
-          <button ng-click="loadCategory()" class="btn btn-info btn-sm"><i class="fa fa-tags">&nbsp;</i><span>{{label.selectedPlayerLabel.trunc(10) || "Labels"}}</span></button>
+           <button ng-click="loadCategory()" class="btn btn-info btn-sm"><i class="fa fa-tags">&nbsp;</i><span>{{label.selectedPlayerLabel.trunc(10) || "Labels"}}</span></button>
           <button ng-show="label.selectedPlayerLabel" ng-click="clearCategory()" class="btn btn-info btn-sm"><i class="fa fa-close"></i></button></span></div>
-    </div>
+          
+        </div>
   </div>
   <ul class="list-group">
-    <li ng-repeat="item in player.players | filter:labelFilter | filter:search | orderBy:&quot;lastReported&quot;:true" class="list-group-item">
+    <li ng-repeat="item in player.players | filter:labelFilter | filter:search | orderBy:(nam?'name':'lastReported'):(nam?false:true)" class="list-group-item">
       <div class="row">
         <div class="col-sm-4">
           <!--h6.text-primary.truncate  {{item.localName || ("Player "+item.cpuSerialNumber.slice(12))}}--><a href="#">
