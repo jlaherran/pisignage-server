@@ -14,7 +14,9 @@ var handleClient = function (socket) {
                 lastReported: Date.now(),
                 ip: socket.handshake.headers['x-forwarded-for'] || socket.handshake.address.address,
                 socket: socket.id,
-                priority: priority
+                priority: priority,
+                piTemperature:status.piTemperature,
+                diskSpaceUsed:status.diskSpaceUsed
             },
             settings,
             status

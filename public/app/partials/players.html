@@ -52,7 +52,8 @@
       </div>
       <div class="row">
         <div class="col-sm-4">
-          <h6 class="text-primary"><small>{{item.cpuSerialNumber}}</small></h6>
+          <h6 class="text-primary"><small>{{item.cpuSerialNumber}}</small>&nbsp;&nbsp;&nbsp;&nbsp;<small class="text-info"><b>{{item.piTemperature}}</b></small>&nbsp;&nbsp;&nbsp;&nbsp;<small class="text-info "><b>{{item.diskSpaceUsed}}</b></small></h6>
+          <h6 class="text-primary"></h6>
         </div>
         <div class="col-sm-3">
           <h6 class="text-primary truncate"><small>last seen:&nbsp;{{item.lastReported | date: "MMM dd, hh:mm a"}}</small></h6>
