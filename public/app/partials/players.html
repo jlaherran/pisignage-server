@@ -17,7 +17,7 @@
         </div>
   </div>
   <ul class="list-group">
-    <li ng-repeat="item in player.players | filter:labelFilter | filter:search | orderBy:(nam?'name':'lastReported'):(nam?false:true)" class="list-group-item">
+    <li ng-show="player.players.length!=0" ng-repeat="item in player.players | filter:labelFilter | filter:search | orderBy:(nam?'name':'lastReported'):(nam?false:true)" class="list-group-item">
       <div class="row">
         <div class="col-sm-4">
           <!--h6.text-primary.truncate  {{item.localName || ("Player "+item.cpuSerialNumber.slice(12))}}--><a href="#">
@@ -68,5 +68,7 @@
         </div>
       </div>
     </li>
+    <li ng-show="player.players.length == 0" class="list-group-item">There are no Players</li>
+ 
   </ul>
 </div>

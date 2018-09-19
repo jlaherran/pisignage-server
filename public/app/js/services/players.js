@@ -5,8 +5,15 @@
  */
 
 angular.module('piPlayers.services', [])
-    .factory('playerLoader', function ($http,piUrls,$state,assetLoader) {
+    .factory('playerLoader', function ($http,piUrls,$state,$stateParams,assetLoader) {
         var observerCallbacks = {};
+        var BUCKET_INTERVALS = [0,5,60,240,24 * 60, 7 * 24 * 60,Infinity];
+      
+       var filterByBucket = function(playerReportedTime) {
+        playerReportedTime = playerReportedTime || 0;
+        var lastReportedTimeInMinutes = parseInt((Date.now() - (new Date(playerReportedTime).getTime()))/60000);
+        return  ((lastReportedTimeInMinutes < BUCKET_INTERVALS[parseInt($stateParams.bucket)]) || (lastReportedTimeInMinutes > BUCKET_INTERVALS[parseInt($stateParams.bucket)+1]));
+    }
         var notifyObservers = function(){
             angular.forEach(observerCallbacks, function(callback){
                 callback();
@@ -30,10 +37,37 @@ angular.module('piPlayers.services', [])
             $http.get(piUrls.players, options)
                 .success(function (data, status) {
                     if (data.success) {
+                        var bucketIndex = parseInt($stateParams.bucket),
+                         playlistPlaying=$stateParams.currentPlaylist,
+                         groupWise=$stateParams.groupName,
+                         versionWise=$stateParams.version,
+                         locationWise=$stateParams.locationName;
                         playerLoader.player.players = data.data.objects;
                         playerLoader.player.currentVersion = data.data.currentVersion;
                         playerLoader.player.players.forEach(function(player){
-                            if (!player.isConnected)
+                            if (!isNaN(bucketIndex)) {
+                                 //filter players
+                                for (var i=playerLoader.player.players.length -1;i>=0;i--) {
+                                    var filter = filterByBucket(playerLoader.player.players[i].lastReported)
+                                    if (filter)
+                                       playerLoader.player.players.splice(i,1);
+                                  
+                                }
+                                
+                            }
+                        if(playlistPlaying){
+                             playerLoader.player.players= playerLoader.player.players.filter(player=>player.currentPlaylist===playlistPlaying);
+                         }
+                        if(groupWise){
+                            playerLoader.player.players=playerLoader.player.players.filter(player=>player.group.name===groupWise);
+                        }
+                        if(versionWise){
+                            playerLoader.player.players=playerLoader.player.players.filter(player=>player.version===versionWise);
+                        }
+                        if(locationWise){
+                            playerLoader.player.players=playerLoader.player.players.filter(player=>(player.locationName===locationWise)||"NA");
+                        }
+                          if (!player.isConnected)
                                 player.statusClass = "text-danger"
                             else if (!player.playlistOn)
                                 player.statusClass = "text-lightyellow"
