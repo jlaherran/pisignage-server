@@ -16,7 +16,8 @@ var handleClient = function (socket) {
                 socket: socket.id,
                 priority: priority,
                 piTemperature:status.piTemperature,
-                diskSpaceUsed:status.diskSpaceUsed
+                diskSpaceUsed:status.diskSpaceUsed,
+                uptime:status.uptime
             },
             settings,
             status

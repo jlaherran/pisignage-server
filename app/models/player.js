@@ -43,7 +43,8 @@ var PlayerSchema = new Schema({
     wifiMac:                String,
     cecTvStatus:            {type: Boolean, default : true},
     piTemperature:          {type:String},
-    diskSpaceUsed:          {type:String}
+    diskSpaceUsed:          {type:String},
+    uptime:                 {type:String},   
 })
 
 

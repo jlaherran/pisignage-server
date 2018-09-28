@@ -60,11 +60,13 @@
                     small.text-info
                     b{{item.piTemperature}}&nbsp;&nbsp;&nbsp;&nbsp;
                     small.text-info
-                    b{{item.diskSpaceUsed}}
+                    b{{item.diskSpaceAvailable}}&nbsp;&nbsp;&nbsp;&nbsp;
+                    small.text-info
+                    b(ng-show="item.uptime"){{item.uptime | timeAgo}}
+                    .col-sm-3
+                    h6.text-primary.truncate: small last seen:&nbsp;{{item.lastReported | timeAgo}}
                 .col-sm-3
-                    h6.text-primary.truncate: small last seen:&nbsp;{{item.lastReported | date: "MMM dd, hh:mm a"}}
-                .col-sm-3
-                    h6(ng-if="!item.isConnected || !item.syncInProgress").text-primary.truncate: small last sync:&nbsp;{{item.lastUpload | date: "MMM dd, hh:mm a"}}
+                    h6(ng-if="!item.isConnected || !item.syncInProgress").text-primary.truncate: small last sync:&nbsp;{{item.lastUpload | timeAgo}}
                     h6(ng-if="item.isConnected && item.syncInProgress").text-primary
                         i.fa.fa-spinner.fa-spin
                         small.truncate &nbsp;{{item.wgetBytes }} &nbsp;{{item.wgetSpeed }}B/sec
