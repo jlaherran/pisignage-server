@@ -1,0 +1,41 @@
+
+<div ng-if="operation" class="modal-content">
+        <div class="modal-header bg-default">
+          <h4  class="modal-title"><span ng-if="operation == 'delete'" class="text-danger">Do you want to delete the selected files?</span><span ng-if="operation == 'assign'">Assign the category to the selected files</span></h4>
+        </div>
+        <div class="modal-body">
+          <div ng-if=" operation == 'assign'">
+            <h5 >Select Labels to be assigned</h5>
+            <div class="row col-sm-3">
+                <div ng-if="!assetConfig.allAssets" ng-dropdown-multiselect="" options="ngDropdown.label.Label.labels" selected-model="ngDropdown.label.selectedLabels" events="ngDropdown.label.events" translation-texts="ngDropdown.label.customTexts" extra-settings="ngDropdown.label.extraSettings" checkboxes="true" ></div>
+                <!-- <label class="checkbox-inline">
+                <input type="checkbox"  selected-model="ngDropdown.label.selectedLabels"  ng-click="ngDropdown.label.selectedLabels"/><small class="text-muted">{{item.name}} </small>-->  
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <p ng-if="filtered.msg" ng-bind="filtered.msg" class="text-info pull-right"></p>
+            </div>
+            <div class="col-sm-12">
+              <div class="btn-toolbar pull-right">
+                <button ng-click="bulkModal.close()" ng-hide="filtered.msg"  class="btn btn-default">Cancel</button>
+                <button ng-click="proceed()" ng-hide="filtered.msg"  class="btn btn-primary">Proceed</button>
+                <button ng-click="bulkModal.close()" ng-show="filtered.msg"  class="btn btn-primary">OK</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-body">
+          <h5 >Selected files</h5>
+          <div class="row">
+            <div ng-repeat="file in bulkSelectedFiles" class="col-sm-6"><small class="text-muted">{{file | truncate:40}}</small></div>
+          </div>
+        </div>
+      </div>
+      <div ng-if="!operation" class="modal-content">
+        <div class="modal-header bg-default">
+          <h4 class="modal-title">Please select at least 1 file
+            <button ng-click="bulkModal.close()" class="btn-xs btn-link fa fa-close pull-right"></button>
+          </h4>
+        </div>
+      </div>

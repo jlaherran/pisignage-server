@@ -116,6 +116,70 @@ angular.module('piAssets.controllers',[])
             )
         }
 
+    $scope.filtered = {selectAll: false, selected : {}, msg:""};
+    $scope.doBulkOperation = function(txt) {
+        $scope.bulkSelectedFiles=[];
+        $scope.bulkSelectedFiles = $scope.ngDropdown.selectedAssets.map(item=>item.playlistDetails.filename);
+        
+
+        $scope.filtered.selected = {}
+
+        if ($scope.bulkSelectedFiles.length)
+            $scope.operation = txt;
+        else
+            $scope.operation = null;
+        $scope.filtered.msg = "";
+        $scope.bulkModal = $modal.open({
+            templateUrl: '/app/templates/bulkAssetsOperation.html',
+            scope: $scope,
+        });
+    }
+    $scope.proceed = function() {
+        var count = 0;
+        selectDropdown=$scope.ngDropdown.selectedAssets
+        async.eachSeries($scope.bulkSelectedFiles, function (file, next) {
+            switch ($scope.operation) {
+                case "delete":
+                    $http
+                        .delete(piUrls.files + file)
+                        .then(function (response) {
+                            var data = response.data;
+                            if (data.success) {
+                                $scope.asset.files.splice($scope.asset.files.indexOf(file), 1);
+                                count += 1;
+                                assetLoader.reload();
+                            }
+                            next();
+                        }, function (response) {
+                            next();
+                        });
+                    break;
+                case "assign":
+                
+                selectFilter={}
+                
+                selectFilter=selectDropdown.filter(asset=>asset.playlistDetails.filename==file)
+                selectFilter.forEach(asset=>{
+                $http.post(piUrls.files + file, {dbdata:asset.fileDetails})
+                .success(function(data, status) {
+                    if (data.success) {
+                        asset.fileDetails = data.data;
+                        // $scope.aset.fileDetails[data.data.name] = data.data;
+                        assetLoader.updateLabelsCount()
+
+                    } next();
+                })
+                .error(function(data, status) {
+                    
+                })
+            });  
+                break;
+            }
+        }, function () {
+            $scope.filtered.msg = $scope.bulkSelectedFiles.length + " files processed";   
+        })
+        $scope.ngDropdown.clearCheckboxes();
+}
         $scope.fn = {};
             $scope.fn.editMode = false;
             $scope.fn.edit = function () {
@@ -141,7 +205,6 @@ angular.module('piAssets.controllers',[])
                     $state.reload();
                 }
             }
-
             $scope.fn.delete= function(index){
                 piPopup.confirm("File "+$scope.asset.files[index], function() {
                     $http
@@ -157,7 +220,6 @@ angular.module('piAssets.controllers',[])
                         });
                 })
             }
-
             $scope.fn.rename= function(index){
                 var oldname = $scope.asset.files[index],
                     newname = $scope.names[index].name + $scope.names[index].ext;
@@ -179,7 +241,6 @@ angular.module('piAssets.controllers',[])
                         });
                 }
             }
-
             $scope.fn.showDetails = function(file) {
                 $state.go("home.assets.assetDetails",{file:file})
             }
@@ -349,6 +410,7 @@ angular.module('piAssets.controllers',[])
 
         //dropdown selects for filter and assign selected files
         $scope.ngDropdown = {
+        
             selectedAssets: [],
             label: {
                 extraSettings: {displayProp:'name', idProp:'name', externalIdProp:'name',
@@ -367,17 +429,6 @@ angular.module('piAssets.controllers',[])
                                 if (asset.fileDetails.labels.indexOf(label.name) == -1)
                                     asset.fileDetails.labels.push(label.name);
                                 //delete asset.selected;
-
-                                $http.post(piUrls.files + asset.fileDetails.name, {dbdata: asset.fileDetails})
-                                    .success(function(data, status) {
-                                        if (data.success) {
-                                            asset.fileDetails = data.data;
-                                            $scope.asset.filesDetails[data.data.name] = data.data;
-                                            assetLoader.updateLabelsCount()
-                                        }
-                                    })
-                                    .error(function(data, status) {
-                                    });
                             }
                         }
                     },
@@ -388,19 +439,9 @@ angular.module('piAssets.controllers',[])
                                 var asset = $scope.ngDropdown.selectedAssets[i],
                                     index = asset.fileDetails.labels.indexOf(label.name);
                                 if (index != -1)
-                                    asset.fileDetails.labels.splice(index, 1);
+                                $scope.aset.fileDetails.labels.splice(index, 1);
                                 //delete asset.selected;
 
-                                $http.post(piUrls.files + asset.fileDetails.name, {dbdata: asset.fileDetails})
-                                    .success(function (data, status) {
-                                        if (data.success) {
-                                            asset.fileDetails = data.data;
-                                            $scope.asset.filesDetails[data.data.name] = data.data;
-                                            assetLoader.updateLabelsCount()
-                                        }
-                                    })
-                                    .error(function (data, status) {
-                                    });
                             }
                         }
                     }
@@ -421,33 +462,36 @@ angular.module('piAssets.controllers',[])
                             var assetNames = playlist.assets.map(function (asset) {
                                 return asset.filename;
                             });
-                            $scope.ngDropdown.selectedAssets.forEach(function (asset) {
-                                if (assetNames.indexOf(asset.playlistDetails.filename) == -1) {
-                                    playlist.assets.push(asset.playlistDetails);
-                                    $scope.asset.groupWiseAssets[$scope.playlist.selectedPlaylist.name].assets.push(asset);
-                                }
-                            })
-                            $http.post(piUrls.playlists + $scope.playlist.selectedPlaylist.name, {assets: playlist.assets})
-                                .success(function (data, status) {
-                                    if (data.success) {
-                                        $scope.ngDropdown.clearCheckboxes();
-                                    }
-                                })
-                                .error(function (data, status) {
-                                    console.log(status);
-                                });
                         }
                     },
                     onItemDeselect: function(index) {
-
-                    }
+                    next();
                 }
+                    }
+        },
+        toggleSelection:function(){  
+            $scope.assetConfig.assets.assets.selected=! $scope.assetConfig.assets.assets.selected   
+                if(!$scope.assetConfig.assets.assets.selected){
+                    $scope.assetConfig.assets.assets.forEach(item=>{
+                    item.selected=true        
+                    });
+                }
+                else $scope.ngDropdown.clearCheckboxes();     
+            $scope.assetConfig.assets.assets.forEach(item=>{
+                $scope.ngDropdown.checkbox(item)
+            });
+                
             },
             checkbox: function(asset) {
-                if (asset.selected)
+            if (asset.selected){
                     $scope.ngDropdown.selectedAssets.push(asset);
-                else
+            }
+            else{
                     $scope.ngDropdown.selectedAssets.splice($scope.ngDropdown.selectedAssets.indexOf(asset), 1)
+                
+        }
+        $scope.assetConfig.assets.assets.selected = $scope.assetConfig.assets.assets.every(function(itm){ return itm.selected; })
+
             },
             clearCheckboxes: function() {
                 $scope.ngDropdown.selectedAssets.forEach(function(asset){
@@ -486,8 +530,6 @@ angular.module('piAssets.controllers',[])
                 },function(response) {
                 });
         }
-
-
 
         $scope.loadCategory = function(){
             $scope.labelMode = "assets"

@@ -13,6 +13,18 @@
           <input type="text" placeholder="filter" ng-model="searchFilename" class="form-control"/>
         </form>
       </div>
+      <div class="col-sm-1 ">
+          <div dropdown="dropdown" class="btn-group-vertical">
+            <button dropdown-toggle="dropdown-toggle" class="btn btn-default btn-xs"><small >multiple&nbsp;</small><i class="fa fa-caret-down fa-lg"></i></button>
+            <div dropdown-menu="dropdown-menu" class="dropdown-menu col-xs-12">
+              <button ng-click="doBulkOperation('assign')"  class="btn btn-default btn-block"><span  class="text-muted">Assign Label</span></button>
+              <button ng-click="doBulkOperation('delete')"  class="btn btn-default btn-block"><span  class="text-danger">Delete selected files</span></button>
+            </div>
+            <div class="btn btn-link btn-xs btn-default">
+           <input type="checkbox" ng-model="assetConfig.assets.assets.selected"  ng-change="ngDropdown.toggleSelection()"/>
+           </div>
+          </div>
+        </div>
       <div dropdown="dropdown" ng-if="!assetConfig.allAssets" class="col-sm-3 dropdown">
         <button dropdown-toggle="dropdown-toggle" class="btn btn-success dropdown-toggle pull-right"><i class="fa fa-plus">&nbsp;ADD</i></button>
         <ul role="menu" class="dropdown-menu">
@@ -27,10 +39,7 @@
         </ul>
       </div>
       <div ng-if="!assetConfig.allAssets" class="col-sm-1"><a ng-click="fn.edit()" class="btn btn-link"><strong class="text-muted">EDIT</strong></a></div>
-      <div ng-hide="!ngDropdown.selectedAssets.length" class="col-sm-2 pull-right">
-        <div ng-if="!assetConfig.allAssets" ng-dropdown-multiselect="" options="ngDropdown.label.Label.labels" selected-model="ngDropdown.label.selectedLabels" events="ngDropdown.label.events" translation-texts="ngDropdown.label.customTexts" extra-settings="ngDropdown.label.extraSettings" checkboxes="true" class="pull-right"></div>
-        <div class="btn-group-xs pull-right"><a ng-if="assetConfig.allAssets" ng-click="ngDropdown.playlist.events.onItemSelect()" class="btn btn-success"><i class="fa fa-lg fa-arrow-circle-right">assign</i></a><a ng-click="ngDropdown.clearCheckboxes()" class="btn btn-link"><i class="fa fa-times"></i></a></div>
-      </div>
+     
     </div>
   </div>
   <ul as-sortable="sortable.options" ng-model="assetConfig.assets.assets" style="min-height:50px;" class="list-group">
