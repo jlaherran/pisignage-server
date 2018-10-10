@@ -439,7 +439,7 @@ angular.module('piAssets.controllers',[])
                                 var asset = $scope.ngDropdown.selectedAssets[i],
                                     index = asset.fileDetails.labels.indexOf(label.name);
                                 if (index != -1)
-                                $scope.aset.fileDetails.labels.splice(index, 1);
+                                asset.fileDetails.labels.splice(index, 1);
                                 //delete asset.selected;
 
                             }
