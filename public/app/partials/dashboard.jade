@@ -6,12 +6,12 @@
             .col-sm-3
                 label.checkbox-inline(ng-show="serverHost")
                     input(type="checkbox",ng-model="onlyInstallation")
-                    span(title="{{'Show players only for this account' | translate}}", translate) Only this account
+                    span(title="{{'Show players only for this account' }}") Only this account
 
             .col-sm-3.pull-right
                 button.btn.btn-primary.navbar-btn.pull-right(
-                title="{{'Register a player with the CPU ID displayed on TV' | translate}}",
-                ng-click='register()',translate) Subscribe to Alerts
+                title="{{'Register a player with the CPU ID displayed on TV' }}",
+                ng-click='register()') Subscribe to Alerts
 
 
     .panel-body

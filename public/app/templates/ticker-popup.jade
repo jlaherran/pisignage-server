@@ -26,34 +26,34 @@
                         small() Scroll right
                 .radio-inline
                         label.text-info
-                            small(translate) OpenVG
+                            small OpenVG
 
                 .radio-inline
                         label
                             input(type='radio',value='openvg_left',name="openvg_left",ng-model='playlist.selectedPlaylist.settings.ticker.behavior')
-                            small(translate) left
+                            small left
 
                 .radio-inline
                         label
                             input(type='radio',value='openvg_right',name="openvg_right",ng-model='playlist.selectedPlaylist.settings.ticker.behavior')
-                            small(translate) right
+                            small right
             .form-group.row(ng-show='playlist.selectedPlaylist.settings.ticker.enable && playlist.selectedPlaylist.settings.ticker.behavior!= "openvg_right"&& playlist.selectedPlaylist.settings.ticker.behavior!= "openvg_left"')
-                label.control-label.text-muted.col-sm-3.text-right(translate) Optional CSS
+                label.control-label.text-muted.col-sm-3.text-right Optional CSS
                 .col-sm-9
                     input.form-control.input-sm(type='text',placeholder='e.g. color:#eee; font-style:italic; ',ng-model='playlist.selectedPlaylist.settings.ticker.style')
             .form-group.row(ng-show='playlist.selectedPlaylist.settings.ticker.enable && (playlist.selectedPlaylist.settings.ticker.behavior== "openvg_right" || playlist.selectedPlaylist.settings.ticker.behavior== "openvg_left")')
-                label.control-label.text-muted.col-sm-3.text-right(translate) Font Size
+                label.control-label.text-muted.col-sm-3.text-right Font Size
                 .col-sm-2
                     input.form-control.input-sm(type='text',placeholder='28',ng-model='playlist.selectedPlaylist.settings.ticker.tickerFontSize')
-                label.control-label.text-muted.col-sm-3.text-right(translate) Width
+                label.control-label.text-muted.col-sm-3.text-right Width
                 .col-sm-2
                     input.form-control.input-sm(type='text',placeholder='0(full)',ng-model='playlist.selectedPlaylist.settings.ticker.tickerWidth')
 
             .form-group.row(ng-show='playlist.selectedPlaylist.settings.ticker.enable && (playlist.selectedPlaylist.settings.ticker.behavior== "openvg_right" || playlist.selectedPlaylist.settings.ticker.behavior== "openvg_left")')
-                label.control-label.text-muted.col-sm-3.text-right(translate) x position
+                label.control-label.text-muted.col-sm-3.text-right x position
                 .col-sm-2
                     input.form-control.input-sm(type='text',placeholder='0(left)',ng-model='playlist.selectedPlaylist.settings.ticker.tickerX')
-                label.control-label.text-muted.col-sm-3.text-right(translate) y position
+                label.control-label.text-muted.col-sm-3.text-right y position
             small.text-muted.control-label.col-sm-3.text-right() Ticker Speed
             .col-sm-9
                 .radio-inline

@@ -87,7 +87,9 @@ exports.index = function (req, res) {
 }
 
 exports.getPlaylist = function (req, res) {
-
+    if (req.params['file'] == "TV_OFF")
+    return rest.sendError(res, 'System Playlist, can not be edited');               
+    
     var file = path.join(config.mediaDir,  ("__" + req.params['file'] + '.json'));
 
     fs.readFile(file, 'utf8', function (err, data) {
@@ -138,6 +140,11 @@ exports.savePlaylist = function (req, res) {
     var file = path.join(config.mediaDir,  ("__" + req.params['file'] + '.json'));
 
     fs.readFile(file, 'utf8', function (err, data) {
+        if (err && (err.code == 'ENOENT') && req.params['file'] == "TV_OFF") {          
+                   data = JSON.stringify(systemPlaylists[0]);                                  
+                     err = null;                                                                 
+                   }   
+
         if (err) {
             rest.sendError(res, "Playlist file read error", err)
         } else {

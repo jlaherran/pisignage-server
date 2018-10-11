@@ -31,42 +31,42 @@
           </label>
         </div>
         <div class="radio-inline">
-            <label class="text-info"><small translate="translate">OpenVG</small></label>
+            <label class="text-info"><small>OpenVG</small></label>
           </div>
           <div class="radio-inline">
             <label>
-              <input type="radio" value="openvg_left" name="openvg_left" ng-model="playlist.selectedPlaylist.settings.ticker.behavior"/><small translate="translate">left</small>
+              <input type="radio" value="openvg_left" name="openvg_left" ng-model="playlist.selectedPlaylist.settings.ticker.behavior"/><small>left</small>
             </label>
           </div>
           <div class="radio-inline">
             <label>
-              <input type="radio" value="openvg_right" name="openvg_right" ng-model="playlist.selectedPlaylist.settings.ticker.behavior"/><small translate="translate">right</small>
+              <input type="radio" value="openvg_right" name="openvg_right" ng-model="playlist.selectedPlaylist.settings.ticker.behavior"/><small >right</small>
             </label>
           </div>
       </div>
     </div>
     <div ng-show="playlist.selectedPlaylist.settings.ticker.enable &amp;&amp; playlist.selectedPlaylist.settings.ticker.behavior!= &quot;openvg_right&quot;&amp;&amp; playlist.selectedPlaylist.settings.ticker.behavior!= &quot;openvg_left&quot;" class="form-group row">
-        <label translate="translate" class="control-label text-muted col-sm-3 text-right">Optional CSS</label>
+        <label class="control-label text-muted col-sm-3 text-right">Optional CSS</label>
         <div class="col-sm-9">
           <input type="text" placeholder="e.g. color:#eee; font-style:italic; " ng-model="playlist.selectedPlaylist.settings.ticker.style" class="form-control input-sm"/>
         </div>
       </div>
       <div ng-show="playlist.selectedPlaylist.settings.ticker.enable &amp;&amp; (playlist.selectedPlaylist.settings.ticker.behavior== &quot;openvg_right&quot; || playlist.selectedPlaylist.settings.ticker.behavior== &quot;openvg_left&quot;)" class="form-group row">
-        <label translate="translate" class="control-label text-muted col-sm-3 text-right">Font Size</label>
+        <label  class="control-label text-muted col-sm-3 text-right">Font Size</label>
         <div class="col-sm-2">
           <input type="text" placeholder="28" ng-model="playlist.selectedPlaylist.settings.ticker.tickerFontSize" class="form-control input-sm"/>
         </div>
-        <label translate="translate" class="control-label text-muted col-sm-3 text-right">Width</label>
+        <label  class="control-label text-muted col-sm-3 text-right">Width</label>
         <div class="col-sm-2">
           <input type="text" placeholder="0(full)" ng-model="playlist.selectedPlaylist.settings.ticker.tickerWidth" class="form-control input-sm"/>
         </div>
       </div>
       <div ng-show="playlist.selectedPlaylist.settings.ticker.enable &amp;&amp; (playlist.selectedPlaylist.settings.ticker.behavior== &quot;openvg_right&quot; || playlist.selectedPlaylist.settings.ticker.behavior== &quot;openvg_left&quot;)" class="form-group row">
-        <label translate="translate" class="control-label text-muted col-sm-3 text-right">x position</label>
+        <label class="control-label text-muted col-sm-3 text-right">x position</label>
         <div class="col-sm-2">
           <input type="text" placeholder="0(left)" ng-model="playlist.selectedPlaylist.settings.ticker.tickerX" class="form-control input-sm"/>
         </div>
-        <label translate="translate" class="control-label text-muted col-sm-3 text-right">y position</label>
+        <label  class="control-label text-muted col-sm-3 text-right">y position</label>
         <div class="col-sm-2">
           <input type="text" placeholder="0(bottom)" ng-model="playlist.selectedPlaylist.settings.ticker.tickerY" class="form-control input-sm"/>
         </div>

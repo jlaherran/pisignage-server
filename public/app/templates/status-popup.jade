@@ -1,6 +1,6 @@
 .modal-header
     button.close(ng-click='deployModal.close()') &times;
-    h3.text-warning {{msg.title}} Status
+    h3.text-warning {{msg.title||" Status"}}
 .modal-body(ng-bind-html='msg.msg'){{msg.msg}}
 .modal-footer
     button.btn.btn-warning(ng-click='deployModal.close()') Dismiss

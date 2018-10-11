@@ -9,18 +9,18 @@
             h5 Select Labels to be assigned
             .row.col-sm-3
                 div(ng-if="!assetConfig.allAssets",ng-dropdown-multiselect="",
-                    options="ngDropdown.label.Label.labels",
-                    selected-model="ngDropdown.label.selectedLabels",
-                    events="ngDropdown.label.events",
-                    translation-texts="ngDropdown.label.customTexts",
-                    extra-settings="ngDropdown.label.extraSettings",
+                    options="nbDropdown.label.Label.labels",
+                    selected-model="nbDropdown.label.selectedLabels",
+                    events="nbDropdown.label.events",
+                    translation-texts="nbDropdown.label.customTexts",
+                    extra-settings="nbDropdown.label.extraSettings",
                     checkboxes="true")
           .row
             .col-sm-12
               p.text-info.pull-right(ng-if="filtered.msg",ng-bind="filtered.msg")
             .col-sm-12
               .btn-toolbar.pull-right
-                button.btn.btn-default(ng-click="bulkModal.close()",ng-hide="filtered.msg")Cancel
+                button.btn.btn-default(ng-click="closeModal()",ng-hide="filtered.msg")Cancel
                 button.btn.btn-primary(ng-click="proceed()",ng-hide="filtered.msg")Proceed
                 button.btn.btn-primary(ng-click="bulkModal.close()",ng-show="filtered.msg")OK
         .modal-body

@@ -14,7 +14,7 @@
         </form>
       </div>
       <div class="col-sm-1 ">
-          <div dropdown="dropdown" class="btn-group-vertical">
+          <div dropdown="dropdown" ng-if="!assetConfig.allAssets" class="btn-group-vertical">
             <button dropdown-toggle="dropdown-toggle" class="btn btn-default btn-xs"><small >multiple&nbsp;</small><i class="fa fa-caret-down fa-lg"></i></button>
             <div dropdown-menu="dropdown-menu" class="dropdown-menu col-xs-12">
               <button ng-click="doBulkOperation('assign')"  class="btn btn-default btn-block"><span  class="text-muted">Assign Label</span></button>
@@ -39,7 +39,12 @@
         </ul>
       </div>
       <div ng-if="!assetConfig.allAssets" class="col-sm-1"><a ng-click="fn.edit()" class="btn btn-link"><strong class="text-muted">EDIT</strong></a></div>
-     
+      <div ng-hide="!assetConfig.allAssets">        
+        <div ng-hide="!ngDropdown.selectedAssets.length" class="col-sm-2 pull-right">
+        <div class="btn-group-xs pull-right"><a ng-if="assetConfig.allAssets" ng-click="ngDropdown.playlist.events.onItemSelect()" class="btn btn-success"><i class="fa fa-lg fa-arrow-circle-right">assign</i></a><a ng-click="ngDropdown.clearCheckboxes()" class="btn btn-link"><i class="fa fa-times"></i></a></div>
+      </div>
+    </div>
+
     </div>
   </div>
   <ul as-sortable="sortable.options" ng-model="assetConfig.assets.assets" style="min-height:50px;" class="list-group">

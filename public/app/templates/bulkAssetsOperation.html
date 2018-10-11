@@ -7,7 +7,7 @@
           <div ng-if=" operation == 'assign'">
             <h5 >Select Labels to be assigned</h5>
             <div class="row col-sm-3">
-                <div ng-if="!assetConfig.allAssets" ng-dropdown-multiselect="" options="ngDropdown.label.Label.labels" selected-model="ngDropdown.label.selectedLabels" events="ngDropdown.label.events" translation-texts="ngDropdown.label.customTexts" extra-settings="ngDropdown.label.extraSettings" checkboxes="true" ></div>
+                <div ng-if="!assetConfig.allAssets" ng-dropdown-multiselect="" options="nbDropdown.label.Label.labels" selected-model="nbDropdown.label.selectedLabels" events="nbDropdown.label.events" translation-texts="nbDropdown.label.customTexts" extra-settings="nbDropdown.label.extraSettings" checkboxes="true" ></div>
                 <!-- <label class="checkbox-inline">
                 <input type="checkbox"  selected-model="ngDropdown.label.selectedLabels"  ng-click="ngDropdown.label.selectedLabels"/><small class="text-muted">{{item.name}} </small>-->  
             </div>
@@ -18,7 +18,7 @@
             </div>
             <div class="col-sm-12">
               <div class="btn-toolbar pull-right">
-                <button ng-click="bulkModal.close()" ng-hide="filtered.msg"  class="btn btn-default">Cancel</button>
+                <button ng-click="closeModal()" ng-hide="filtered.msg"  class="btn btn-default">Cancel</button>
                 <button ng-click="proceed()" ng-hide="filtered.msg"  class="btn btn-primary">Proceed</button>
                 <button ng-click="bulkModal.close()" ng-show="filtered.msg"  class="btn btn-primary">OK</button>
               </div>
