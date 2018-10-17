@@ -50,8 +50,8 @@ angular.module('piPlayers.services', [])
                         if(!player.isConnected){
                         player.uptime=null
                         }
-                        else if(player.uptime){
-                        player.uptime=parseInt(Date.now()-(player.uptime*1000))
+                        else if(player.uptime){                
+                       player.uptime= moment().subtract(player.uptime,"seconds").fromNow(true); 
                         }}
                         if (!isNaN(bucketIndex)) {
                             //filter players
