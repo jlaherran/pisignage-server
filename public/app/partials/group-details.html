@@ -7,7 +7,7 @@
       </div>
       <div class="col-sm-9">
         <div class="btn-toolbar pull-right">
-          <div class="btn-group"><a ng-click="emergencyMessage()" class="btn btn-default btn-sm"><em class="text-danger">Emergency Message</em></a><a ng-click="groupTicker()" class="btn btn-default btn-sm"><em class="text-danger">Group Ticker</em></a><a ng-click="displaySet()" class="btn btn-default btn-sm"><em class="text-danger">Group Settings</em></a></div>
+          <div class="btn-group"><a ng-click="exportGroupAssets()" class="btn btn-default btn-sm"><em class="text-danger">Export to USB</em></a><a ng-click="emergencyMessage()" class="btn btn-default btn-sm"><em class="text-danger">Emergency Message</em></a><a ng-click="groupTicker()" class="btn btn-default btn-sm"><em class="text-danger">Group Ticker</em></a><a ng-click="displaySet()" class="btn btn-default btn-sm"><em class="text-danger">Group Settings</em></a></div>
           <div class="btn-group"><a ng-disabled="!group.selectedGroup.playlists.length" ng-click="deploy()" class="btn btn-success btn-sm">Deploy to {{group.selectedGroup.name}}</a>&nbsp;<br/>
             <div class="checkbox-inline">
               <label>

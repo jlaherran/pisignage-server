@@ -190,7 +190,9 @@ var sendConfig = function (player, group, periodic) {
     retObj.currentTime = Date.now();
     var socketio = (player.newSocketIo?newSocketio:oldSocketio);
     socketio.emitMessage(player.socket, 'config', retObj);
+    return retObj;
 }
+exports.sendConfig=sendConfig;
 
 //Load a object
 exports.loadObject = function (req, res, next, id) {

@@ -202,7 +202,71 @@ angular.module('piGroups.controllers', [])
 
         playerLoader.registerObserverCallback(initSortArray,"group-detail");
         initSortArray();
-        
+        var prepareForDeploy = function() {
+            listFiles();
+            $scope.group.orientation = $scope.group.orientation || 'landscape';
+            $scope.group.resolution = $scope.group.resolution || '720p';
+            $scope.group.deploy = true;
+            $scope.group.selectedGroup.exportAssets = false;
+        }
+        var listFiles = function() {
+            GroupFunctions.listFiles ($scope.group.selectedGroup,$scope.playlist.playlists, $scope.playlist.playlistNames,function(err,groupObj){
+                $scope.deployErrorMessage = err;
+                $scope.group.selectedGroup = groupObj;
+                $scope.showDates();
+            })
+        }
+        var statusTimer;
+        $scope.exportGroupAssets = function() {
+            function getExportStatus() {
+                $http.get(piUrls.exportStatus)
+                    .then(function(response) {
+                        //console.log('Success: ' + JSON.stringify(response, null, 2));
+                        if (response.data) {
+                            $scope.exportMessage = response.data.stat_message;
+                            $scope.exportInProgress = response.data.data.inProgress;
+                        }
+                        if ($scope.exportInProgress) {
+                            statusTimer = setTimeout(getExportStatus, 1000);
+                        } else if (response.data && response.data.data) {
+                            $scope.exportLink = response.data.data.link;
+                            $scope.exportFile = response.data.data.file;
+                        }
+                    }, function(response) {
+                        console.log('Error: ' + JSON.stringify(response, null, 2));
+                        $scope.exportError = response.data.stat_message;
+                        $scope.exportInProgress = false;
+                    });
+            }
+            prepareForDeploy();
+            $scope.group.selectedGroup.exportAssets = true;
+            $scope.exportMessage = '';
+            $scope.exportInProgress = true;
+            $scope.exportLink = '';
+            $scope.exportAssetsStatusModal = $modal.open({
+                templateUrl: '/app/templates/exportAssetsStatusPopup.html',
+                scope: $scope
+            });
+
+            $scope.exportAssetsStatusModalClose = function(){ // reload the page to fetch new info
+                clearTimeout(statusTimer);
+                $scope.exportAssetsStatusModal.dismiss();
+                $scope.needToDeploy = false;
+            };
+
+            $http.post(piUrls.groups + $state.params.group, $scope.group.selectedGroup)
+                .then(function(response) {
+                    $scope.group.selectedGroup.exportAssets = false;
+                    if (response.data)
+                        $scope.exportMessage = response.data.stat_message;
+                    getExportStatus();
+                }, function(response) {
+                    $scope.group.selectedGroup.exportAssets = false;
+                    $scope.exportMessage = '';
+                    $scope.exportError = "Response Error for exports assets http message";
+                    $scope.exportInProgress = false;
+                });
+        };
         $scope.updateGroup = function (cb) {
             $scope.needToDeploy = true;
             GroupFunctions.listFiles($scope.group.selectedGroup, $scope.playlist.playlists, $scope.playlist.playlistNames, function (err, groupObj) {
