@@ -9,6 +9,7 @@ angular.module('piServerApp', [
     'piConfig',
     'piIndex.controllers',
     'piGroups.controllers',
+    'dashboard.controllers',
     'piAssets.controllers',
     'piAssets.services',
     'piPlayers.services',
@@ -61,6 +62,26 @@ angular.module('piServerApp', [
                 }
             })
 
+            .state("home.dashboard",{
+                url: "dashboard",
+                views: {
+                    "main": {
+                        templateUrl: '/app/partials/dashboard.html',
+                        controller: 'DashboardCtrl'
+                    }
+                }
+            })
+
+            .state("home.dashboard_players", {
+                url: "dashboard/players?groupName&locationName&currentPlaylist&version&bucket",
+                views: {
+                    "main": {
+                        templateUrl: '/app/partials/players.html',
+                        controller:'ServerPlayerCtrl'
+                    }
+                }
+            })
+            
             // .state("home.players.players_details", {
             //     url: "players/:player?group",
             //     views: {
