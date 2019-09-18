@@ -165,6 +165,8 @@ var sendConfig = function (player, group, periodic) {
     retObj.emergencyMessage = group.emergencyMessage || {enable: false};
     retObj.combineDefaultPlaylist = group.combineDefaultPlaylist || false;
     retObj.playAllEligiblePlaylists = group.playAllEligiblePlaylists || false;
+    retObj.shuffleContent = group.shuffleContent || false;
+    retObj.alternateContent = group.alternateContent || false;
     retObj.urlReloadDisable =  group.urlReloadDisable || false;
     retObj.loadPlaylistOnCompletion =  group.loadPlaylistOnCompletion || false;
     //if (!pipkgjson)
@@ -552,11 +554,18 @@ exports.upload = function (cpuId, filename, data) {
 }
 
 exports.tvPower = function(req,res){
-    var status = req.body.status;
-    var object = req.object;
+    var object = req.object,
+        cmd = req.body.cmd || "tvpower",
+        arg;
+    if (cmd =="debuglevel") {
+        arg = {level: req.body.level }
+    } else if (cmd == "tvpower") {
+        arg =  {off: req.body.status}
+    }
+
     var socketio = (object.newSocketIo?newSocketio:oldSocketio);
-    socketio.emitMessage(object.socket,'cmd','tvpower',{off: status} );
-    return rest.sendSuccess(res,'TV command issued');
+    socketio.emitMessage(object.socket,'cmd',cmd,arg );
+    return rest.sendSuccess(res,'Player command issued');
 }
 
 
